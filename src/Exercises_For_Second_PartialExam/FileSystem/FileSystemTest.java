@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-class File implements Comparable<File>{
+class File implements Comparable<File> {
     String name;
     int size;
     LocalDateTime dateCreated;
@@ -50,15 +50,15 @@ class File implements Comparable<File>{
         this.dateCreated = dateCreated;
     }
 
-    public String getMonthAndDay(){
-        return String.format("%s-%d",dateCreated.getMonth(),dateCreated.getDayOfMonth());
+    public String getMonthAndDay() {
+        return String.format("%s-%d", dateCreated.getMonth(), dateCreated.getDayOfMonth());
     }
 
     @Override
     public int compareTo(File o) {
-        Comparator<File> comparator=Comparator.comparing(File::getDateCreated)
+        Comparator<File> comparator = Comparator.comparing(File::getDateCreated)
                 .thenComparing(File::getName).thenComparing(File::getSize);
-        return comparator.compare(this,o);
+        return comparator.compare(this, o);
     }
 }
 
@@ -70,6 +70,7 @@ class FileSystem {
     public FileSystem() {
         filesByFolder = new HashMap<>();
         allFiles = new ArrayList<>();
+
     }
 
     public void addFile(char folder, String name, int size, LocalDateTime createdAt) {
@@ -98,7 +99,7 @@ class FileSystem {
     }
 
     public Map<Integer, Set<File>> byYear() {
-       return allFiles.stream()
+        return allFiles.stream()
                 .collect(Collectors.groupingBy(f -> f.getDateCreated().getYear()
                         , Collectors.toCollection(TreeSet::new)));
     }
@@ -108,7 +109,7 @@ class FileSystem {
         return allFiles.stream()
                 .collect(Collectors.groupingBy(f -> f.getMonthAndDay(),
                         TreeMap::new
-                        ,Collectors.summingLong(File::getSize)));
+                        , Collectors.summingLong(File::getSize)));
     }
 }
 
